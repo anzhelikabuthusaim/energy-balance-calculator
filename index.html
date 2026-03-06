@@ -33,14 +33,16 @@
     gap:28px;
     align-items:flex-start;
     width:100%;
-    max-width:1100px;
+    max-width:1000px; /* зменшено для кращої композиції */
+    margin:0 auto;
   }
 
   .container{
     background:var(--card-bg);
-    padding:28px;
+    padding:24px;
     border-radius:14px;
-    width:420px;
+    flex:1;
+    min-width:320px;
     box-shadow:0 12px 30px rgba(0,0,0,0.18);
   }
 
@@ -48,7 +50,8 @@
     background:var(--card-bg);
     padding:22px;
     border-radius:14px;
-    width:420px;
+    flex:1;
+    min-width:320px;
     box-shadow:0 12px 30px rgba(0,0,0,0.12);
     font-size:14px;
     line-height:1.5;
@@ -147,7 +150,7 @@
 
   .badge{
     display:inline-block;
-    padding:6px 10px;
+    padding:8px 12px;
     border-radius:999px;
     font-weight:700;
     font-size:13px;
@@ -320,11 +323,15 @@
 
   function copyResult(){
     const text = window._lastResultText || 'Немає результату для копіювання.';
-    navigator.clipboard?.writeText(text).then(()=>{
-      alert('Результат скопійовано в буфер обміну.');
-    }).catch(()=>{
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(()=>{
+        alert('Результат скопійовано в буфер обміну.');
+      }).catch(()=>{
+        prompt('Скопіюйте результат вручну:', text);
+      });
+    } else {
       prompt('Скопіюйте результат вручну:', text);
-    });
+    }
   }
 </script>
 </body>
